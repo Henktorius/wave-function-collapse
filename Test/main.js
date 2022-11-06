@@ -39,17 +39,11 @@ function setup() {
       console.log("New cell created with index: "+ newCell.index);
     } 
   }
-  /*
-  // Choose random cell to start
-  let firstCell = Math.random()*(cells.length-1);
-  cells[Math.floor(firstCell)].shape = Math.floor(Math.random()*12)+1;
-  */
 
   while(currentIteration<(cells.length))
   {
     untouchedCells = [];
     possibleCells = [];
-    //console.log("Iteration: " + currentIteration);
     // Iterate through all cells to find the lowest entropy
     // If a cell hasn't been assigned a shape yet (shape = -1) it's added to a special array to only loop through new cells
     let entropy = 4;
@@ -65,7 +59,6 @@ function setup() {
         }
       }
     });
-    //console.log("New untouched cells array: " + untouchedCells.length);
     // Iterate through all the new cells and extract the ones with the lowest entropy
     untouchedCells.forEach(cell => {
       let cellOptions = 4;
@@ -75,14 +68,12 @@ function setup() {
         possibleCells.push(cell); // Array with cells with the lowest entropy
       }
     });
-    //console.log("New possible cells array: " + possibleCells.length);
     // We choose a random cell from the ones with the lowest entropy and assign it a random shape depending on it's neighbours
     // 1: Choose cell
     // 2: Get neighbouring cells
     // 3: Make an array with all the possible shapes
     // 4: Choose one randomly
     let chosenCell = possibleCells[Math.floor(Math.random()*(possibleCells.length-1))];
-    //console.log("Chosen cell x: " + chosenCell.x +" y: " + chosenCell.y);
     var pS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]; // Possible shapes
     
     if (chosenCell.options.T == "C") {
@@ -111,7 +102,6 @@ function setup() {
     }
 
     collapseCell(chosenCell.x, chosenCell.y, pS, chosenCell.index, entropy);
-    //drawCell(possibleCells[0].x, possibleCells[0].y, possibleCells[0].options, possibleCells[0].shape);
     currentIteration++;
   }
 }
@@ -437,32 +427,22 @@ function collapseCell(x, y, possibleShapes, index, entropy) {
       break;
     case 13:
       rect((width/size)*x+(width/size)/2, (height/size)*y+(height/size)/2-thickness/2, width/size/2, thickness); // Shape 13
-      //fill(0);
       circle((width/size)*x+(width/size)/2, (height/size)*y+(height/size)/2, thickness*4);
-      //noFill();
       break;
     case 14:
       rect((width/size)*x+(width/size)/2-thickness/2, (height/size)*y+(height/size)/2-thickness/2, thickness, height/size/2+thickness); // Shape 14
-      //fill(0);
       circle((width/size)*x+(width/size)/2, (height/size)*y+(height/size)/2, thickness*4);
-      //noFill();
       break;
     case 15:
       rect((width/size)*x, (height/size)*y+(height/size)/2-thickness/2, width/size/2, thickness); // Shape 15
-      //fill(0);
       circle((width/size)*x+(width/size)/2, (height/size)*y+(height/size)/2, thickness*4);
-      //noFill();
       break;
     case 16:
       rect((width/size)*x+(width/size)/2-thickness/2, (height/size)*y, thickness, height/size/2+thickness); // Shape 16
-      //fill(0);
       circle((width/size)*x+(width/size)/2, (height/size)*y+(height/size)/2, thickness*4);
-      //noFill();
       break;
                                     
   }
 
-  //rect((width/size)*x, (height/size)*y, width/size, height/size);
-  //text(index, (width/size)*x+((width/size)/2), (height/size)*y+((height/size)/2));
   console.log(`[Iteration: ${currentIteration}] [Untouched cells array: ${untouchedCells.length}] [Possible cells array: ${possibleCells.length}] [Chosen cell: ${index}] [Shape given: ${chosenOpt}] [Minimum entropy: ${entropy}]`);
 }
